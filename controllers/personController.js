@@ -28,7 +28,11 @@ const createPerson = async (req, res, next) => {
   }
 
   try {
-    const person = await Person.create(req.body);
+    const person = await Person.create(req.body, {
+      runValidators: true,
+      context: 'query',
+      new: true,
+    });
     res.status(StatusCodes.CREATED).json({ person });
   } catch (error) {
     next(error);
